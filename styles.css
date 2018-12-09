@@ -1,0 +1,55 @@
+body {
+  background-color: black;
+  font-family: 'Raleway', sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#thefile {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+}
+
+#canvas {
+  width: 60%;
+  height: 40%;  
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  
+  margin: auto;
+}
+
+#now-playing {
+  color: white;
+  font-size: 20pt;
+  position: absolute;
+
+  bottom: 20%;
+  left: 20%;
+}
+
+#links {
+  font-family: 'Font Awesome\ 5 Free';
+  color: white;
+  font-size: 30pt;
+}
+
+#name {
+  color: white;
+  width: 100%;
+  font-size: 60pt;
+}
+
+audio {
+  width: calc(100% - 20px);
+}

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Will Kolb</title>
+  <meta name="description" content="Music">
+  <meta name="author" content="William Kolb">
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+
+   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"> 
+
+</head>
+
+<body>
+  <div id="content">
+    <div id="name">
+      <br>
+      <center>
+        William Kolb
+      </center>
+    </div>
+    <br>
+    <div id="links">
+      <center>
+        <a href="https://soundcloud.com/itskolb">
+          <i class="fab fa-soundcloud"></i>
+        </a>
+        &emsp;
+        <a href="https://youtube.com/u/">
+          <i class="fab fa-youtube"></i>
+        </a>
+      </center>
+    </div>
+    <canvas id="canvas"></canvas>
+    <div id="now-playing">
+      <center>
+        Now Playing: Views
+      </center>
+    </div>
+
+    <audio id="audio"></audio>
+  </div>
+
+
+</body>
+
+
+
+<script>
+window.onload = function() {
+  var file = document.getElementById("thefile");
+  var audio = document.getElementById("audio");
+
+  audio.src = "./Views.wav";
+  audio.load();
+  audio.play();
+  var context = new AudioContext();
+  var src = context.createMediaElementSource(audio);
+  var analyser = context.createAnalyser();
+
+  var canvas = document.getElementById("canvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  var ctx = canvas.getContext("2d");
+
+  src.connect(analyser);
+  analyser.connect(context.destination);
+
+  analyser.fftSize = 64;
+
+  var bufferLength = analyser.frequencyBinCount;
+  console.log(bufferLength);
+
+  var dataArray = new Uint8Array(bufferLength);
+
+  var WIDTH = canvas.width;
+  var HEIGHT = canvas.height;
+
+  var barWidth = (WIDTH / bufferLength) * 2.5;
+  var barHeight;
+  var x = 0;
+
+  function renderFrame() {
+    requestAnimationFrame(renderFrame);
+    x = 0;
+    analyser.getByteFrequencyData(dataArray);
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+    for (var i = 0; i < bufferLength; i++) {
+      barHeight = dataArray[i]/255 * HEIGHT;
+      var r = barHeight + ((i/bufferLength));
+      var g = 0;
+      var b = 255 * (i/bufferLength);
+      ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+      ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
+      x += barWidth + 1;
+    }
+  }
+
+  audio.play();
+  renderFrame();
+};
+</script>
+
