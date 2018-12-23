@@ -15,6 +15,16 @@ a {
   z-index: 100;
 }
 
+.play-button {
+  display:block;
+  height: 120pt;
+  width: 120pt;
+  border-radius: 50%;
+  border: 3px solid white;
+  background-color: inherit;
+  color: white;
+}
+
 #canvas {
   width: 60%;
   height: 40%;  
